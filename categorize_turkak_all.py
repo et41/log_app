@@ -8,7 +8,11 @@ meaningful for OOXML files, which are the only ones carrying that metadata).
 import csv
 import json
 import os
+import sys
 from collections import Counter
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 INPUT_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "turkak_all_files_report.csv")
 OUTPUT_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "category_summary_turkak_all.json")

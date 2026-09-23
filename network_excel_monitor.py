@@ -32,6 +32,9 @@ from xml.etree import ElementTree as ET
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers.polling import PollingObserver
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 WATCH_PATHS = [
     r"\\192.168.100.3\test\TÜRKAK",
 ]

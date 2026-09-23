@@ -19,6 +19,9 @@ import zipfile
 from datetime import datetime
 from xml.etree import ElementTree as ET
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 ROOT_PATH = r"\\192.168.100.3\test\TEST RAPORLARI"
 OUTPUT_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "test_raporlari_report.csv")
 

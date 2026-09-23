@@ -7,7 +7,11 @@ array for the dashboard's "Recent changes" panel, sorted newest first.
 import csv
 import json
 import os
+import sys
 from datetime import datetime, timedelta
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 INPUT_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "turkak_all_files_report.csv")
 OUTPUT_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "turkak_recent_changes.json")

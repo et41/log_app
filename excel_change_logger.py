@@ -14,11 +14,15 @@ Note: this only records changes made WHILE this script is running.
 import csv
 import getpass
 import os
+import sys
 import time
 from datetime import datetime
 
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 DESKTOP_PATH = os.path.join(os.path.expanduser("~"), "Desktop")
 LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "excel_change_log.csv")

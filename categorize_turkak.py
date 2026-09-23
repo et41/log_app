@@ -6,7 +6,11 @@ by last-modified-by, by top-level folder, by year, by extension.
 import csv
 import json
 import os
+import sys
 from collections import Counter
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 INPUT_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "turkak_full_report.csv")
 OUTPUT_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "category_summary_turkak.json")
