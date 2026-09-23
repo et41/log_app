@@ -1,0 +1,453 @@
+<title>TÜRKAK</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --surface-1: #fcfcfb;
+    --surface-2: #f9f9f7;
+    --surface-panel: #ffffff;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --gridline: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --accent: #2a78d6;
+    --accent-wash: rgba(42,120,214,0.10);
+    --accent-track: #e4edf9;
+    --muted-fill: #c3c2b7;
+    --muted-track: #eceae4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --surface-1: #1a1a19;
+      --surface-2: #0d0d0d;
+      --surface-panel: #201f1d;
+      --text-primary: #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted: #8f8d87;
+      --gridline: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255,255,255,0.10);
+      --accent: #3987e5;
+      --accent-wash: rgba(57,135,229,0.16);
+      --accent-track: #24344a;
+      --muted-fill: #55534d;
+      --muted-track: #2a2a27;
+    }
+  }
+  :root[data-theme="dark"] {
+    --surface-1: #1a1a19;
+    --surface-2: #0d0d0d;
+    --surface-panel: #201f1d;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #8f8d87;
+    --gridline: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255,255,255,0.10);
+    --accent: #3987e5;
+    --accent-wash: rgba(57,135,229,0.16);
+    --accent-track: #24344a;
+    --muted-fill: #55534d;
+    --muted-track: #2a2a27;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--surface-2);
+    color: var(--text-primary);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 32px 16px 64px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+
+  .mono { font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Consolas, monospace; }
+
+  header.page { display: flex; flex-direction: column; gap: 6px; padding-bottom: 4px; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+  }
+  h1 { margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+  .subtitle { margin: 0; color: var(--text-secondary); font-size: 14px; max-width: 65ch; }
+  .source-path {
+    margin-top: 4px; font-size: 12.5px; color: var(--text-muted);
+    word-break: break-all;
+  }
+
+  .panel {
+    background: var(--surface-panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 20px 18px;
+  }
+  .panel h2 { margin: 0 0 2px; font-size: 15px; font-weight: 600; }
+  .panel .panel-note { margin: 0 0 16px; font-size: 12.5px; color: var(--text-muted); }
+
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 760px) { .charts-row { grid-template-columns: 1fr; } }
+
+  .hbar-list { display: flex; flex-direction: column; gap: 10px; }
+  .hbar-row { display: grid; grid-template-columns: 128px 1fr 44px; align-items: center; gap: 10px; }
+  .hbar-name {
+    font-size: 12.5px; color: var(--text-secondary); text-align: right;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .hbar-name.is-muted { font-style: italic; color: var(--text-muted); }
+  .hbar-track { background: var(--accent-track); border-radius: 4px; height: 18px; position: relative; cursor: default; }
+  .hbar-track.is-muted-track { background: var(--muted-track); }
+  .hbar-fill {
+    background: var(--accent); height: 100%; border-radius: 4px 4px 4px 0;
+    min-width: 3px;
+  }
+  .hbar-fill.is-muted { background: var(--muted-fill); }
+  .hbar-value { font-size: 12px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+
+
+  .filter-input {
+    width: 100%; max-width: 280px; padding: 7px 10px; border-radius: 7px;
+    border: 1px solid var(--border); background: var(--surface-1); color: var(--text-primary);
+    font-size: 13px; margin-bottom: 12px;
+  }
+  .filter-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  thead th {
+    text-align: left; font-weight: 600; color: var(--text-secondary);
+    border-bottom: 1px solid var(--gridline); padding: 6px 8px; position: sticky; top: 0; background: var(--surface-panel);
+  }
+  tbody td { padding: 6px 8px; border-bottom: 1px solid var(--gridline); color: var(--text-primary); }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-secondary); }
+  .table-scroll { max-height: 320px; overflow: auto; border: 1px solid var(--border); border-radius: 8px; }
+
+  footer.page { font-size: 11.5px; color: var(--text-muted); padding-top: 4px; border-top: 1px solid var(--gridline); margin-top: 4px; }
+
+  .live-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .live-head h2 { display: inline-flex; align-items: center; gap: 8px; }
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted-fill); display: inline-block; }
+  .live-dot.is-live { background: #1baf7a; box-shadow: 0 0 0 3px rgba(27,175,122,0.18); }
+  #live-log-scroll { max-height: 280px; }
+  #recent-scroll { max-height: 340px; }
+  .recent-badge {
+    display: inline-flex; align-items: center; font-size: 11px; font-weight: 600;
+    color: var(--accent); background: var(--accent-wash); border-radius: 5px;
+    padding: 2px 7px; letter-spacing: 0.02em;
+  }
+
+  .tab-row { display: flex; gap: 4px; margin: 10px 0 12px; border-bottom: 1px solid var(--gridline); }
+  .tab-btn {
+    appearance: none; border: none; background: transparent; cursor: pointer;
+    font: inherit; font-size: 13px; color: var(--text-secondary); padding: 7px 4px;
+    margin-bottom: -1px; border-bottom: 2px solid transparent;
+  }
+  .tab-btn.is-active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+  .tab-btn:hover:not(.is-active) { color: var(--text-primary); }
+  .live-empty { text-align: center; color: var(--text-muted); padding: 18px 8px !important; }
+  .live-row-new { animation: liveFlash 1.6s ease-out; }
+  @keyframes liveFlash { from { background: var(--accent-wash); } to { background: transparent; } }
+
+  #tooltip {
+    position: fixed; pointer-events: none; z-index: 50;
+    background: var(--text-primary); color: var(--surface-1);
+    font-size: 12px; padding: 6px 9px; border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    opacity: 0; transform: translateY(3px); transition: opacity 0.1s ease;
+    max-width: 260px;
+  }
+  #tooltip.visible { opacity: 1; }
+  #tooltip .tt-title { font-weight: 600; margin-bottom: 2px; }
+</style>
+
+<div class="wrap">
+  <header class="page">
+    <div class="eyebrow">Excel change audit</div>
+    <h1>TÜRKAK</h1>
+    <p class="subtitle">Who last saved each Excel file in the TÜRKAK accreditation folder, read straight from the files' own embedded authorship metadata &mdash; no manual sign-off log required.</p>
+    <p class="source-path mono" id="source-path"></p>
+  </header>
+
+  <section class="panel">
+    <div class="live-head">
+      <div>
+        <h2>Live edit log <span class="live-dot" id="live-dot"></span></h2>
+        <p class="panel-note" id="live-status">Connecting&hellip;</p>
+      </div>
+    </div>
+    <p class="panel-note">Every file's metadata only ever holds its creator and its most recent editor &mdash; not a full history. This table is different: it's a running record, captured as changes happen on the share, of every save this monitor has actually seen since it started watching. It grows over time; a file with no rows here simply hasn't been saved since monitoring began.</p>
+    <div class="table-scroll" id="live-log-scroll">
+      <table>
+        <thead><tr><th>Seen at</th><th>Event</th><th>File</th><th>Saved by</th></tr></thead>
+        <tbody id="live-log-table"><tr><td colspan="4" class="live-empty">Waiting for the first sync&hellip;</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="live-head">
+      <div>
+        <h2>Recent changes <span class="recent-badge" id="recent-badge"></span></h2>
+        <p class="panel-note">Every file (any type) whose filesystem timestamp shows it was modified in the last 2 days, newest first &mdash; a point-in-time snapshot from the last full scan, not the live monitor above.</p>
+      </div>
+    </div>
+    <div class="tab-row" role="tablist">
+      <button class="tab-btn is-active" id="recent-tab-summary" role="tab" aria-selected="true">Summary</button>
+      <button class="tab-btn" id="recent-tab-details" role="tab" aria-selected="false">By subfolder &amp; type</button>
+    </div>
+    <input class="filter-input" id="recent-filter" type="text" placeholder="Filter recent changes&hellip;">
+    <div class="table-scroll" id="recent-scroll">
+      <table id="recent-summary-view">
+        <thead><tr><th>Modified at</th><th>Saved by</th><th>File</th><th>Type</th></tr></thead>
+        <tbody id="recent-table"></tbody>
+      </table>
+    </div>
+    <div class="charts-row" id="recent-details-view" hidden>
+      <div>
+        <p class="panel-note" style="margin-top:12px" id="recent-subfolder-note"></p>
+        <div class="hbar-list" id="recent-subfolder-chart"></div>
+      </div>
+      <div>
+        <p class="panel-note" style="margin-top:12px" id="recent-extension-note"></p>
+        <div class="hbar-list" id="recent-extension-chart"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="page">
+    Live monitor watches <span class="mono">\\192.168.100.3\test\TÜRKAK</span> for every file type. "Saved by" is the Office user name embedded in each Office document at save time (docProps/core.xml) &mdash; other file types (PDFs, images, legacy .doc/.xls, &hellip;) don't carry that field.
+  </footer>
+</div>
+
+<div id="tooltip"></div>
+
+<script>
+(function () {
+  var DATA = {
+    totalFiles: 1790,
+    sourcePath: "\\\\192.168.100.3\\test\\TÜRKAK"
+  };
+
+  var fmt = function (n) { return n.toLocaleString("en-US"); };
+  var pct = function (n) { return (100 * n / DATA.totalFiles).toFixed(1) + "%"; };
+
+  document.getElementById("source-path").textContent = DATA.sourcePath;
+
+  // ---- tooltip ----
+  var tt = document.getElementById("tooltip");
+  function showTip(el, title, lines) {
+    tt.innerHTML = '<div class="tt-title">' + title + '</div>' + lines.join("<br>");
+    tt.classList.add("visible");
+  }
+  function moveTip(evt) {
+    var x = evt.clientX + 14, y = evt.clientY + 14;
+    var w = 260, h = 60;
+    if (x + w > window.innerWidth) x = evt.clientX - w - 14;
+    if (y + h > window.innerHeight) y = evt.clientY - h - 14;
+    tt.style.left = x + "px"; tt.style.top = y + "px";
+  }
+  function hideTip() { tt.classList.remove("visible"); }
+
+  // ---- horizontal bar chart builder (top N + Other) ----
+  function buildHBars(containerId, data, topN, totalOverride) {
+    var container = document.getElementById(containerId);
+    var total = totalOverride || DATA.totalFiles;
+    var localPct = function (n) { return (100 * n / total).toFixed(1) + "%"; };
+    var sorted = data.slice();
+    var top = sorted.slice(0, topN);
+    var rest = sorted.slice(topN);
+    var restSum = rest.reduce(function (s, r) { return s + r[1]; }, 0);
+    var rows = top.slice();
+    if (rest.length) rows.push(["Other (" + rest.length + " more)", restSum]);
+
+    var max = Math.max.apply(null, rows.map(function (r) { return r[1]; }));
+
+    rows.forEach(function (r) {
+      var name = r[0], count = r[1];
+      var isMuted = name.indexOf("unknown") !== -1 || name.indexOf("Other (") === 0;
+      var row = document.createElement("div");
+      row.className = "hbar-row";
+      var pctWidth = Math.max(3, Math.round((count / max) * 100));
+      row.innerHTML =
+        '<div class="hbar-name' + (isMuted ? ' is-muted' : '') + '" title="' + name.replace(/"/g, "&quot;") + '">' + name + '</div>' +
+        '<div class="hbar-track' + (isMuted ? ' is-muted-track' : '') + '"><div class="hbar-fill' + (isMuted ? ' is-muted' : '') + '" style="width:' + pctWidth + '%"></div></div>' +
+        '<div class="hbar-value">' + fmt(count) + '</div>';
+      row.addEventListener("mouseenter", function (e) {
+        showTip(row, name, [fmt(count) + " files &middot; " + localPct(count) + " of total"]);
+        moveTip(e);
+      });
+      row.addEventListener("mousemove", moveTip);
+      row.addEventListener("mouseleave", hideTip);
+      container.appendChild(row);
+    });
+  }
+  // ---- live edit log (db capability) ----
+  var liveDot = document.getElementById("live-dot");
+  var liveStatus = document.getElementById("live-status");
+  var liveBody = document.getElementById("live-log-table");
+  var lastRenderedIds = "";
+
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function shortPath(p) {
+    if (!p) return "";
+    var markers = ["TÜRKAK\\", "TEST RAPORLARI\\"];
+    for (var i = 0; i < markers.length; i++) {
+      var idx = p.indexOf(markers[i]);
+      if (idx !== -1) return p.slice(idx + markers[i].length);
+    }
+    return p;
+  }
+
+  function renderLiveLog(doc) {
+    var events = (doc && doc.events) || [];
+    if (!events.length) {
+      liveBody.innerHTML = '<tr><td colspan="4" class="live-empty">No saves recorded yet since monitoring began.</td></tr>';
+      return;
+    }
+    var ids = events.map(function (e) { return e.seenAt + e.path + e.eventType; }).join("|");
+    var isFirstRender = lastRenderedIds === "";
+    var newlyAdded = {};
+    if (!isFirstRender) {
+      var prevSet = {};
+      lastRenderedIds.split("|").forEach(function (k) { prevSet[k] = true; });
+      events.forEach(function (e) {
+        var key = e.seenAt + e.path + e.eventType;
+        if (!prevSet[key]) newlyAdded[key] = true;
+      });
+    }
+    lastRenderedIds = ids;
+
+    liveBody.innerHTML = "";
+    events.forEach(function (e) {
+      var key = e.seenAt + e.path + e.eventType;
+      var tr = document.createElement("tr");
+      if (newlyAdded[key]) tr.className = "live-row-new";
+      var who = e.lastModifiedBy || (e.note ? "(legacy file)" : "(unknown)");
+      tr.innerHTML =
+        '<td class="mono">' + escapeHtml(e.seenAt) + '</td>' +
+        '<td>' + escapeHtml(e.eventType) + '</td>' +
+        '<td title="' + escapeHtml(e.path) + '">' + escapeHtml(shortPath(e.path)) + '</td>' +
+        '<td>' + escapeHtml(who) + '</td>';
+      liveBody.appendChild(tr);
+    });
+  }
+
+  (async function initLive() {
+    var db = (window.claude && window.claude.use) ? await window.claude.use("db") : null;
+    if (!db) {
+      liveDot.classList.remove("is-live");
+      liveStatus.textContent = "Live sync unavailable in this view.";
+      return;
+    }
+    db.doc("logs/recent").onSnapshot(
+      function (snap) {
+        var data = snap.exists ? snap.data() : null;
+        renderLiveLog(data);
+        if (data && data.updatedAt) {
+          liveDot.classList.add("is-live");
+          liveStatus.textContent = "Live — last synced " + data.updatedAt + " · " + (data.totalRecorded || 0) + " events recorded in total";
+        } else {
+          liveDot.classList.remove("is-live");
+          liveStatus.textContent = "Monitoring started — waiting for the first save.";
+        }
+      },
+      function (err) {
+        liveDot.classList.remove("is-live");
+        liveStatus.textContent = "Live sync error (" + err.code + ").";
+      }
+    );
+  })();
+
+  // ---- recent changes (last 2 days) ----
+  var recentBadge = document.getElementById("recent-badge");
+  var recentBody = document.getElementById("recent-table");
+  var recentSummaryView = document.getElementById("recent-summary-view");
+  var recentDetailsView = document.getElementById("recent-details-view");
+  var tabSummary = document.getElementById("recent-tab-summary");
+  var tabDetails = document.getElementById("recent-tab-details");
+  var recentSubfolderNote = document.getElementById("recent-subfolder-note");
+  var recentExtensionNote = document.getElementById("recent-extension-note");
+  var recentSubfolderChart = document.getElementById("recent-subfolder-chart");
+  var recentExtensionChart = document.getElementById("recent-extension-chart");
+  var recentRowsData = [];
+
+  function recentSubfolderOf(path) {
+    var parts = path.split("\\");
+    if (parts.length <= 1) return "(root files)";
+    var top = parts[0];
+    return parts.length > 2 ? top + "/" + parts[1] : top + "/(root)";
+  }
+
+  function countBy(rows, keyFn) {
+    var counts = {};
+    var order = [];
+    rows.forEach(function (r) {
+      var k = keyFn(r);
+      if (!(k in counts)) { counts[k] = 0; order.push(k); }
+      counts[k]++;
+    });
+    return order.map(function (k) { return [k, counts[k]]; }).sort(function (a, b) { return b[1] - a[1]; });
+  }
+
+  function renderRecentRows(rows) {
+    if (!rows.length) {
+      recentBody.innerHTML = '<tr><td colspan="4" class="live-empty">No matches.</td></tr>';
+    } else {
+      recentBody.innerHTML = "";
+      rows.forEach(function (r) {
+        var who = r.lastModifiedBy || "(unknown)";
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+          '<td class="mono">' + escapeHtml(r.modifiedAt) + '</td>' +
+          '<td>' + escapeHtml(who) + '</td>' +
+          '<td title="' + escapeHtml(r.path) + '">' + escapeHtml(r.path) + '</td>' +
+          '<td class="mono">' + escapeHtml(r.extension) + '</td>';
+        recentBody.appendChild(tr);
+      });
+    }
+
+    recentSubfolderNote.textContent = "Which subfolders these " + rows.length + " changes landed in.";
+    recentExtensionNote.textContent = "Which file types these " + rows.length + " changes were.";
+    recentSubfolderChart.innerHTML = "";
+    recentExtensionChart.innerHTML = "";
+    if (rows.length) {
+      buildHBars("recent-subfolder-chart", countBy(rows, function (r) { return recentSubfolderOf(r.path); }), 10, rows.length);
+      buildHBars("recent-extension-chart", countBy(rows, function (r) { return r.extension || "(none)"; }), 10, rows.length);
+    }
+  }
+
+  function setRecentTab(which) {
+    var summaryActive = which === "summary";
+    tabSummary.classList.toggle("is-active", summaryActive);
+    tabDetails.classList.toggle("is-active", !summaryActive);
+    tabSummary.setAttribute("aria-selected", String(summaryActive));
+    tabDetails.setAttribute("aria-selected", String(!summaryActive));
+    recentSummaryView.hidden = !summaryActive;
+    recentDetailsView.hidden = summaryActive;
+  }
+  tabSummary.addEventListener("click", function () { setRecentTab("summary"); });
+  tabDetails.addEventListener("click", function () { setRecentTab("details"); });
+
+  fetch("recent_changes.json")
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      recentRowsData = data;
+      recentBadge.textContent = recentRowsData.length + " in last 2 days";
+      renderRecentRows(recentRowsData);
+    })
+    .catch(function () {
+      recentBadge.textContent = "unavailable";
+      recentBody.innerHTML = '<tr><td colspan="4" class="live-empty">Could not load recent changes data.</td></tr>';
+    });
+
+  document.getElementById("recent-filter").addEventListener("input", function (e) {
+    var q = e.target.value.toLowerCase();
+    renderRecentRows(recentRowsData.filter(function (r) {
+      return r.path.toLowerCase().indexOf(q) !== -1 || (r.lastModifiedBy || "").toLowerCase().indexOf(q) !== -1;
+    }));
+  });
+})();
+</script>

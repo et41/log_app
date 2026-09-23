@@ -1,0 +1,128 @@
+{
+  "total_files": 147,
+  "unreadable_files": 19,
+  "by_last_modified_by": [
+    [
+      "(unknown / legacy file)",
+      41
+    ],
+    [
+      "Eren Turan",
+      32
+    ],
+    [
+      "Ahmet",
+      16
+    ],
+    [
+      "İsmail Karaman",
+      16
+    ],
+    [
+      "Mehmet Akgül",
+      10
+    ],
+    [
+      "Ahmet Turan",
+      9
+    ],
+    [
+      "Ali Yalnız",
+      9
+    ],
+    [
+      "Norm Teknik",
+      3
+    ],
+    [
+      "ares trafo",
+      3
+    ],
+    [
+      "Selin Uygun",
+      2
+    ],
+    [
+      "8microsft",
+      2
+    ],
+    [
+      "İlhan Aydın",
+      1
+    ],
+    [
+      "İLHAN AYDIN",
+      1
+    ],
+    [
+      "tuik",
+      1
+    ],
+    [
+      "ozkan AYKURT",
+      1
+    ]
+  ],
+  "by_folder": [
+    [
+      "DOKÜMANLAR",
+      94
+    ],
+    [
+      "DENETİM",
+      27
+    ],
+    [
+      "YENİ FORMAT  AKREDİTASYON DOKÜMANLARI",
+      10
+    ],
+    [
+      "PROGEN - LAK -TRAFO DENEYLERİ",
+      9
+    ],
+    [
+      "PROGEN - LAK - AC YÜKSEK GERİLİM",
+      4
+    ],
+    [
+      "DENETİM RAPOR",
+      3
+    ]
+  ],
+  "by_year_modified": [
+    [
+      "2019",
+      2
+    ],
+    [
+      "2022",
+      2
+    ],
+    [
+      "2023",
+      14
+    ],
+    [
+      "2024",
+      35
+    ],
+    [
+      "2025",
+      51
+    ],
+    [
+      "2026",
+      24
+    ],
+    [
+      "Unknown",
+      19
+    ]
+  ],
+  "by_extension": [
+    [
+      ".xlsx",
+      147
+    ]
+  ]
+}

@@ -1,0 +1,430 @@
+{
+  "total_files": 1790,
+  "ooxml_files_with_metadata": 778,
+  "by_top_folder": [
+    [
+      "DOKÜMANLAR",
+      1199
+    ],
+    [
+      "DENETİM",
+      342
+    ],
+    [
+      "YENİ FORMAT  AKREDİTASYON DOKÜMANLARI",
+      155
+    ],
+    [
+      "PROGEN - LAK -TRAFO DENEYLERİ",
+      37
+    ],
+    [
+      "PROGEN - LAK - AC YÜKSEK GERİLİM",
+      11
+    ],
+    [
+      "TÜRKAK FİRMA LOGOSU",
+      11
+    ],
+    [
+      "(files in TÜRKAK root)",
+      10
+    ],
+    [
+      "BAŞVURU DOKÜMANLARI",
+      8
+    ],
+    [
+      "AHMET TURAN - DOKÜMANLAR",
+      6
+    ],
+    [
+      "DENETİM RAPOR",
+      3
+    ],
+    [
+      "TÜRKAK BELGE",
+      2
+    ],
+    [
+      "TÜRKAK FORMLAR",
+      2
+    ],
+    [
+      "Türkak Portal Kapsam Çıktısı",
+      2
+    ],
+    [
+      "TÜRKAK SERTİFİKALARI",
+      2
+    ]
+  ],
+  "by_subfolder": [
+    [
+      "DENETİM/2024",
+      242
+    ],
+    [
+      "DOKÜMANLAR/PS-6.2 Personel",
+      185
+    ],
+    [
+      "DOKÜMANLAR/PS-6.4 Donanım",
+      180
+    ],
+    [
+      "YENİ FORMAT  AKREDİTASYON DOKÜMANLARI/YENİ FORMAT",
+      145
+    ],
+    [
+      "DOKÜMANLAR/PS-6.5 Metrolojik İzlenebilirlik",
+      122
+    ],
+    [
+      "DENETİM/2026",
+      100
+    ],
+    [
+      "DOKÜMANLAR/PS-7.8 Sonuçların Raporlaması",
+      87
+    ],
+    [
+      "DOKÜMANLAR/PS-8.7 Düzetici Faaliyetler",
+      87
+    ],
+    [
+      "DOKÜMANLAR/PS-8.3 KYS Doküman Kontrolü",
+      64
+    ],
+    [
+      "DOKÜMANLAR/PS-7.6 Ölçüm Belirsizliği",
+      53
+    ],
+    [
+      "DOKÜMANLAR/PS-7.5 Teknik Kayıtlar",
+      47
+    ],
+    [
+      "DOKÜMANLAR/PS-6.6 Satın Alma",
+      45
+    ],
+    [
+      "DOKÜMANLAR/PS-7.10 Uygun Olmayan İş",
+      38
+    ],
+    [
+      "DOKÜMANLAR/PS-7.1 Talep Teklif ve Sözleşme",
+      34
+    ],
+    [
+      "DOKÜMANLAR/PS-8.8 İç Tetkik ve DENETİM-ler",
+      34
+    ],
+    [
+      "PROGEN - LAK -TRAFO DENEYLERİ/(root)",
+      28
+    ],
+    [
+      "DOKÜMANLAR/PS-5 Yapısal Gereklilikler",
+      23
+    ],
+    [
+      "DOKÜMANLAR/PS-7.4 Deney ve Kalibrasyon Öğelerinin Elleçlenmesi",
+      23
+    ],
+    [
+      "DOKÜMANLAR/PS-8.9 YGG",
+      20
+    ],
+    [
+      "DOKÜMANLAR/PS-7.7 Deney Sonuçların Güvencesi",
+      19
+    ],
+    [
+      "DOKÜMANLAR/PS-4 Genel Gereklilikler",
+      18
+    ],
+    [
+      "DOKÜMANLAR/PS-6.3 Tesisler ve Çevresel Koşullar",
+      17
+    ],
+    [
+      "DOKÜMANLAR/PS-7.2 Yöntemlerin Doğrulanması",
+      14
+    ],
+    [
+      "DOKÜMANLAR/TÜRKAK FORMLAR VE PROSEDÜRLER",
+      14
+    ],
+    [
+      "DOKÜMANLAR/Deney Talimatları",
+      12
+    ],
+    [
+      "DOKÜMANLAR/PS-7.11 Verilerin Kontrolü ve Bilgi Yönetimi",
+      12
+    ],
+    [
+      "DOKÜMANLAR/1. KEK",
+      11
+    ],
+    [
+      "TÜRKAK FİRMA LOGOSU/(root)",
+      11
+    ],
+    [
+      "(files in TÜRKAK root)",
+      10
+    ],
+    [
+      "DOKÜMANLAR/PS-8.5 Risk ve Fırsatların Yönetimi",
+      10
+    ],
+    [
+      "PROGEN - LAK -TRAFO DENEYLERİ/SIFIR EMPEDANS ÖLÇÜM DENEMELERİ",
+      9
+    ],
+    [
+      "YENİ FORMAT  AKREDİTASYON DOKÜMANLARI/(root)",
+      9
+    ],
+    [
+      "BAŞVURU DOKÜMANLARI/(root)",
+      8
+    ],
+    [
+      "DOKÜMANLAR/PS-7.9 Şikâyetler",
+      8
+    ],
+    [
+      "DOKÜMANLAR/PS-8.2 KYS Dokümantasyon",
+      7
+    ],
+    [
+      "AHMET TURAN - DOKÜMANLAR/(root)",
+      6
+    ],
+    [
+      "PROGEN - LAK - AC YÜKSEK GERİLİM/05.02.2025",
+      6
+    ],
+    [
+      "DOKÜMANLAR/(root)",
+      5
+    ],
+    [
+      "PROGEN - LAK - AC YÜKSEK GERİLİM/ESKİ",
+      5
+    ],
+    [
+      "DOKÜMANLAR/PS-8.4 Kayıtların Kontrolü",
+      4
+    ],
+    [
+      "DENETİM RAPOR/(root)",
+      3
+    ],
+    [
+      "DOKÜMANLAR/BAĞIMSIZ DOKÜMANLAR",
+      3
+    ],
+    [
+      "DOKÜMANLAR/PS-8.6 İyileştirme",
+      3
+    ],
+    [
+      "TÜRKAK BELGE/(root)",
+      2
+    ],
+    [
+      "TÜRKAK FORMLAR/(root)",
+      2
+    ],
+    [
+      "Türkak Portal Kapsam Çıktısı/(root)",
+      2
+    ],
+    [
+      "TÜRKAK SERTİFİKALARI/(root)",
+      2
+    ],
+    [
+      "YENİ FORMAT  AKREDİTASYON DOKÜMANLARI/FORMLAR",
+      1
+    ]
+  ],
+  "by_extension": [
+    [
+      ".pdf",
+      937
+    ],
+    [
+      ".docx",
+      649
+    ],
+    [
+      ".xlsx",
+      146
+    ],
+    [
+      ".jpg",
+      20
+    ],
+    [
+      ".doc",
+      9
+    ],
+    [
+      ".jpeg",
+      6
+    ],
+    [
+      ".rar",
+      5
+    ],
+    [
+      ".png",
+      5
+    ],
+    [
+      ".txt",
+      2
+    ],
+    [
+      ".bmp",
+      2
+    ],
+    [
+      ".gif",
+      2
+    ],
+    [
+      ".tiff",
+      2
+    ],
+    [
+      ".mp4",
+      1
+    ],
+    [
+      ".zip",
+      1
+    ],
+    [
+      ".pptx",
+      1
+    ],
+    [
+      ".dwg",
+      1
+    ],
+    [
+      ".log",
+      1
+    ]
+  ],
+  "by_last_modified_by": [
+    [
+      "Ahmet Turan",
+      254
+    ],
+    [
+      "Eren Turan",
+      203
+    ],
+    [
+      "İsmail Karaman",
+      89
+    ],
+    [
+      "Mehmet Akgül",
+      71
+    ],
+    [
+      "Mesut Akgül",
+      36
+    ],
+    [
+      "Hakan Emre Akalp",
+      27
+    ],
+    [
+      "(unknown / unreadable)",
+      26
+    ],
+    [
+      "Ali Yalnız",
+      20
+    ],
+    [
+      "ares trafo",
+      18
+    ],
+    [
+      "Ahmet",
+      16
+    ],
+    [
+      "Norm Teknik",
+      5
+    ],
+    [
+      "8microsft",
+      4
+    ],
+    [
+      "Selin Uygun",
+      3
+    ],
+    [
+      "İlhan Aydın",
+      2
+    ],
+    [
+      "İLHAN AYDIN",
+      1
+    ],
+    [
+      "tuik",
+      1
+    ],
+    [
+      "Ahmet TURAN",
+      1
+    ],
+    [
+      "ozkan AYKURT",
+      1
+    ]
+  ],
+  "by_year_modified": [
+    [
+      "2019",
+      2
+    ],
+    [
+      "2020",
+      2
+    ],
+    [
+      "2022",
+      8
+    ],
+    [
+      "2023",
+      22
+    ],
+    [
+      "2024",
+      522
+    ],
+    [
+      "2025",
+      665
+    ],
+    [
+      "2026",
+      569
+    ]
+  ]
+}
