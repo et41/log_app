@@ -23,3 +23,9 @@ Desktop.ini
 
 # Logs
 *.log
+
+# File-access audit output (contains user names and file paths)
+file_access_log.csv
+file_access_state.json
+file_access_live.json
+file_access_recent.json

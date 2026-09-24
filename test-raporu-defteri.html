@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>TÜRKAK</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -16,6 +17,10 @@
     --accent-track: #e4edf9;
     --muted-fill: #c3c2b7;
     --muted-track: #eceae4;
+    --danger: #c23b30;
+    --danger-wash: rgba(194,59,48,0.10);
+    --warn: #a86400;
+    --warn-wash: rgba(168,100,0,0.12);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -33,6 +38,10 @@
       --accent-track: #24344a;
       --muted-fill: #55534d;
       --muted-track: #2a2a27;
+      --danger: #ec6a5e;
+      --danger-wash: rgba(236,106,94,0.16);
+      --warn: #e0a043;
+      --warn-wash: rgba(224,160,67,0.16);
     }
   }
   :root[data-theme="dark"] {
@@ -50,6 +59,10 @@
     --accent-track: #24344a;
     --muted-fill: #55534d;
     --muted-track: #2a2a27;
+    --danger: #ec6a5e;
+    --danger-wash: rgba(236,106,94,0.16);
+    --warn: #e0a043;
+    --warn-wash: rgba(224,160,67,0.16);
   }
 
   * { box-sizing: border-box; }
@@ -146,6 +159,26 @@
   .live-row-new { animation: liveFlash 1.6s ease-out; }
   @keyframes liveFlash { from { background: var(--accent-wash); } to { background: transparent; } }
 
+  #access-scroll { max-height: 340px; }
+  .access-controls { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-bottom: 12px; }
+  .access-controls .filter-input { margin-bottom: 0; }
+  .action-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .action-chip {
+    appearance: none; font: inherit; font-size: 12px; cursor: pointer;
+    border: 1px solid var(--border); background: transparent; color: var(--text-secondary);
+    border-radius: 999px; padding: 4px 10px;
+  }
+  .action-chip.is-active { border-color: var(--accent); color: var(--accent); background: var(--accent-wash); font-weight: 600; }
+  .action-pill {
+    display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+    border-radius: 5px; padding: 1px 7px; color: var(--text-secondary); background: var(--muted-track);
+  }
+  .action-pill.a-WRITE { color: var(--accent); background: var(--accent-wash); }
+  .action-pill.a-COPY { color: var(--warn); background: var(--warn-wash); }
+  .action-pill.a-DELETE, .action-pill.a-PERMISSIONS { color: var(--danger); background: var(--danger-wash); }
+  .sub-line { display: block; font-size: 11.5px; color: var(--text-muted); }
+  .access-count { font-size: 11px; color: var(--text-muted); margin-left: 4px; }
+
   #tooltip {
     position: fixed; pointer-events: none; z-index: 50;
     background: var(--text-primary); color: var(--surface-1);
@@ -164,7 +197,28 @@
     <h1>TÜRKAK</h1>
     <p class="subtitle">Who last saved each Excel file in the TÜRKAK accreditation folder, read straight from the files' own embedded authorship metadata &mdash; no manual sign-off log required.</p>
     <p class="source-path mono" id="source-path"></p>
+    <p class="source-path mono">File access audited on C:\Users\Ares Trafo\Desktop\TÜRKAK</p>
   </header>
+
+  <section class="panel">
+    <div class="live-head">
+      <div>
+        <h2>Live file access <span class="live-dot" id="access-dot"></span> <span class="recent-badge" id="access-badge"></span></h2>
+        <p class="panel-note" id="access-status">Connecting&hellip;</p>
+        <p class="panel-note">Who opened, saved, copied, deleted or re-permissioned each file in the last 2 days, from the Windows security audit log (events 4663/5145) &mdash; the real Windows account, for every file type, not the Office author field. Repeated opens of the same file within a minute are counted as one row.</p>
+      </div>
+    </div>
+    <div class="access-controls">
+      <input class="filter-input" id="access-filter" type="text" placeholder="Filter by user or file&hellip;">
+      <div class="action-chips" id="access-chips"></div>
+    </div>
+    <div class="table-scroll" id="access-scroll">
+      <table>
+        <thead><tr><th>Time</th><th>User</th><th>Action</th><th>File</th><th>Client</th></tr></thead>
+        <tbody id="access-table"><tr><td colspan="5" class="live-empty">Loading&hellip;</td></tr></tbody>
+      </table>
+    </div>
+  </section>
 
   <section class="panel">
     <div class="live-head">
@@ -213,7 +267,7 @@
   </section>
 
   <footer class="page">
-    Live monitor watches <span class="mono">\\192.168.100.3\test\TÜRKAK</span> for every file type. "Saved by" is the Office user name embedded in each Office document at save time (docProps/core.xml) &mdash; other file types (PDFs, images, legacy .doc/.xls, &hellip;) don't carry that field.
+    Live monitor watches <span class="mono">\\192.168.100.3\test\TÜRKAK</span> for every file type. "Saved by" is the Office user name embedded in each Office document at save time (docProps/core.xml) &mdash; other file types (PDFs, images, legacy .doc/.xls, &hellip;) don't carry that field. "File access" comes from the server's Windows audit events 4663/5145 instead; a copy from the share to someone's own PC can only show as READ.
   </footer>
 </div>
 
@@ -442,6 +496,132 @@
       recentBadge.textContent = "unavailable";
       recentBody.innerHTML = '<tr><td colspan="4" class="live-empty">Could not load recent changes data.</td></tr>';
     });
+
+  // ---- file access (Windows audit log, last 2 days) ----
+  var accessBadge = document.getElementById("access-badge");
+  var accessBody = document.getElementById("access-table");
+  var accessChips = document.getElementById("access-chips");
+  var accessFilter = document.getElementById("access-filter");
+  var ACCESS_ACTIONS = ["READ", "WRITE", "COPY", "DELETE", "PERMISSIONS"];
+  var accessDot = document.getElementById("access-dot");
+  var accessStatus = document.getElementById("access-status");
+  var accessRows = [];
+  var accessAction = "";
+  var accessSeenKeys = null;
+  var accessNewKeys = {};
+
+  function accessKey(r) { return r.time + "|" + r.user + "|" + r.action + "|" + r.path; }
+
+  function renderAccessChips() {
+    var counts = {};
+    accessRows.forEach(function (r) { counts[r.action] = (counts[r.action] || 0) + 1; });
+    accessChips.innerHTML = "";
+    [""].concat(ACCESS_ACTIONS).forEach(function (a) {
+      if (a && !counts[a]) return;
+      var b = document.createElement("button");
+      b.className = "action-chip" + (a === accessAction ? " is-active" : "");
+      b.textContent = (a || "All") + " " + fmt(a ? counts[a] : accessRows.length);
+      b.addEventListener("click", function () { accessAction = a; renderAccessChips(); renderAccessRows(); });
+      accessChips.appendChild(b);
+    });
+  }
+
+  function renderAccessRows() {
+    var q = accessFilter.value.toLowerCase();
+    var rows = accessRows.filter(function (r) {
+      if (accessAction && r.action !== accessAction) return false;
+      return !q || r.path.toLowerCase().indexOf(q) !== -1 || r.user.toLowerCase().indexOf(q) !== -1 ||
+        (r.copiedFrom || "").toLowerCase().indexOf(q) !== -1;
+    });
+    if (!rows.length) {
+      accessBody.innerHTML = '<tr><td colspan="5" class="live-empty">' +
+        (accessRows.length ? "No matches." : "No file access recorded in the last 2 days.") + '</td></tr>';
+      return;
+    }
+    accessBody.innerHTML = "";
+    rows.forEach(function (r) {
+      var tr = document.createElement("tr");
+      if (accessNewKeys[accessKey(r)]) tr.className = "live-row-new";
+      tr.innerHTML =
+        '<td class="mono">' + escapeHtml(r.time) + '</td>' +
+        '<td>' + escapeHtml(r.user) + '</td>' +
+        '<td><span class="action-pill a-' + escapeHtml(r.action) + '">' + escapeHtml(r.action) + '</span>' +
+          (r.count > 1 ? '<span class="access-count">&times;' + r.count + '</span>' : '') + '</td>' +
+        '<td title="' + escapeHtml(r.path) + '">' + escapeHtml(r.path) +
+          (r.copiedFrom ? '<span class="sub-line">copied from ' + escapeHtml(r.copiedFrom) + '</span>' : '') + '</td>' +
+        '<td class="mono">' + escapeHtml(r.clientIp || "") + '</td>';
+      accessBody.appendChild(tr);
+    });
+  }
+
+  function setAccessRows(rows) {
+    var keys = {};
+    accessNewKeys = {};
+    rows.forEach(function (r) {
+      var k = accessKey(r);
+      keys[k] = true;
+      if (accessSeenKeys && !accessSeenKeys[k]) accessNewKeys[k] = true;
+    });
+    accessSeenKeys = keys;
+    accessRows = rows;
+    var users = {};
+    rows.forEach(function (r) { users[r.user] = true; });
+    var userCount = Object.keys(users).length;
+    accessBadge.textContent = fmt(rows.length) + (rows.length === 1 ? " access · " : " accesses · ") +
+      userCount + (userCount === 1 ? " user" : " users");
+    renderAccessChips();
+    renderAccessRows();
+  }
+
+  // Served by dashboard_server.py: poll the collector's output file.
+  var ACCESS_POLL_MS = 5000;
+  var accessLastUpdatedAt = null;
+
+  function pollAccessFile() {
+    fetch("file_access_live.json", { cache: "no-store" })
+      .then(function (res) { if (!res.ok) throw new Error(res.status); return res.json(); })
+      .then(function (data) {
+        if (data.updatedAt !== accessLastUpdatedAt) {
+          accessLastUpdatedAt = data.updatedAt;
+          setAccessRows(data.events || []);
+        }
+        accessDot.classList.add("is-live");
+        accessStatus.textContent = "Live — last collected " + data.updatedAt + " · " + fmt(data.totalRecorded || 0) + " accesses recorded in total";
+      })
+      .catch(function () {
+        accessDot.classList.remove("is-live");
+        if (!accessRows.length) {
+          accessBadge.textContent = "";
+          accessBody.innerHTML = '<tr><td colspan="5" class="live-empty">No audit data yet &mdash; start dashboard_server.py (elevated).</td></tr>';
+        }
+        accessStatus.textContent = "Not connected to the collector — retrying every " + (ACCESS_POLL_MS / 1000) + "s.";
+      })
+      .then(function () { setTimeout(pollAccessFile, ACCESS_POLL_MS); });
+  }
+
+  (async function initLiveAccess() {
+    var db = (window.claude && window.claude.use) ? await window.claude.use("db") : null;
+    if (!db) { pollAccessFile(); return; }
+    db.doc("logs/access").onSnapshot(
+      function (snap) {
+        var data = snap.exists ? snap.data() : null;
+        if (data && data.updatedAt) {
+          setAccessRows(data.events || []);
+          accessDot.classList.add("is-live");
+          accessStatus.textContent = "Live — last synced " + data.updatedAt + " · " + fmt(data.totalRecorded || 0) + " accesses recorded in total";
+        } else {
+          accessDot.classList.remove("is-live");
+          accessStatus.textContent = "Waiting for the first sync from file_access_collector.py.";
+          accessBody.innerHTML = '<tr><td colspan="5" class="live-empty">No file access synced yet.</td></tr>';
+        }
+      },
+      function (err) {
+        accessDot.classList.remove("is-live");
+        accessStatus.textContent = "Live sync error (" + err.code + ").";
+      }
+    );
+  })();
+  accessFilter.addEventListener("input", renderAccessRows);
 
   document.getElementById("recent-filter").addEventListener("input", function (e) {
     var q = e.target.value.toLowerCase();
